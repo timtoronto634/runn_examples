@@ -1,0 +1,20 @@
+desc: vars を使ってみる
+runners:
+  req: https://zenn.dev
+vars:
+  username: ${USERNAME:-timtoronto}
+  order: "daily"
+steps:
+  listArticles:
+    desc: "指定された件数分、記事一覧を取得します"
+    req:
+      /api/articles?username={{ vars.username }}&order={{ vars.order }}:
+        get:
+          body:
+            application/json: null
+    dump: current.res
+    test: |
+      current.res.status == 200 &&
+      len(current.res.body.articles) == 0
+    bind:
+      articles: current.res.body.articles
