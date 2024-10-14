@@ -1,0 +1,11 @@
+desc: This scenario tests the connection to the MySQL database set up with Docker Compose
+steps:
+  - 
+    db:
+      query: "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))"
+  - 
+    db:
+      query: SELECT * FROM users
+    test: len(current.rows) != 0
+
+
