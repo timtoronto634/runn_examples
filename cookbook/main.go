@@ -7,6 +7,13 @@ import (
 )
 
 func main() {
+	mux := NewRouter()
+
+	fmt.Println("Server is running on http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", mux))
+}
+
+func NewRouter() http.Handler {
 	mux := http.NewServeMux()
 
 	// エンドポイント1: 単純な挨拶
@@ -54,6 +61,5 @@ func main() {
 		fmt.Fprintf(w, "%s request received", r.Method)
 	})
 
-	fmt.Println("Server is running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	return mux
 }
