@@ -29,7 +29,31 @@ func main() {
 		fmt.Fprintf(w, "Echo: %s", message)
 	})
 
-	// サーバーの起動
+	// GETメソッドの処理
+	mux.HandleFunc("GET /resource", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "GET request received")
+	})
+
+	// POSTメソッドの処理
+	mux.HandleFunc("POST /resource", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "POST request received")
+	})
+
+	// PUTメソッドの処理
+	mux.HandleFunc("PUT /resource", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "PUT request received")
+	})
+
+	// DELETEメソッドの処理
+	mux.HandleFunc("DELETE /resource", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "DELETE request received")
+	})
+
+	// 全てのメソッドを処理する汎用ハンドラ
+	mux.HandleFunc("/all-methods", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "%s request received", r.Method)
+	})
+
 	fmt.Println("Server is running on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
